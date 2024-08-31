@@ -1,0 +1,6 @@
+So this is a little bit different from the way the other one works
+Basically we perform the audio recording (hopefully) and the tts on the runlinc side, and just process the image/generate response
+Run the new llama 3.1 8B model at a 4 bit quant, use microsoft florence small base for image transcription
+Whisper for stt ofc, might have to use large model but should be fine given more vram not being used for XTTS
+This way I can talk about the built in tts that we use with runlinc maybe
+Also I won't have to use websockets, just a request that sends the image and voice data, and returns the generated response

@@ -1,0 +1,25 @@
+body {
+    background-color: #323433;
+    color: white;
+    font-family: chilanka;
+}
+table, tr, th, td {
+    border: 1px solid white;
+}
+td {
+    width: 350px;
+    height: 350px;
+    text-align: center; 
+    vertical-align: middle;
+}
+
+.skullInfo {
+    background-color: red;
+    border: 1px solid white;
+    border-radius: 45px;
+    width: 100px;
+    padding: 10px;
+    padding-top: 15px;
+    font-weight: bold;
+    font-size: 25px;
+}

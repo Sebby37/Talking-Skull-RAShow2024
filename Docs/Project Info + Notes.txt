@@ -1,0 +1,93 @@
+CATEGORY: Entertainment
+IDEA:
+	- A talking skull that you talk to and makes puns/jokes
+	- Has access to webcam so it can make jokes based on the surroundings
+	- Uses stt to transcribe voice to text, sends to vision llm with access to webcam, generate response, speak response using tts
+TECH:
+	- STT:
+		- whisper.cpp server with best whisper model I can use (accounting for vram ofc)
+		- If push comes to shove I can run it off CPU alone, will be slow but saves precious vram
+	- LLM:
+		- Models would be run at lower quants, maybe even Q4_0 or Q4_K_? for speed and vram savings
+		- I'm thinking two options here:
+			1. Use a vision llm for both the vision and text gen aspect.
+				PROS:
+					- Uses less vram
+					- Model has better knowledge of the scene and image
+				CONS:
+					- Constrained by the available vision models (Phi, llava) which are probably not as good at humor or anything
+			2. Use a small vision llm and a regular llm. The vision llm would generate a description of the webcam and send it off to the regular llm as part of prompt.
+				PROS:
+					- Get to use an actually good llm for the jokes (prolly Llama 3 8B)
+					- Vision llm can be as descriptive as I want and I can control how it generates the description
+					- Could use MS Florence for image captioning instead, not sure if supported by llama.cpp but may be WAY better than a regular vision llm.
+				CONS:
+					- Potentially WAY more vram usage
+					- Either model has to communicate through text, potentially losing details about the image
+					- To get a good description I'll need a good amount of tokens meaning higher context meaning slower speeds + higher vram
+					- Need to move stuff between multiple servers, increasing latency
+	- TTS:
+		- XTTS is the obvious option here due to it's (rather mid tbh) voice cloning. Problem is it's high(-ish) vram usage and no easy server binary/command (from memory)
+		- Definetly do research into this, I may have seen r/localllama discussions on newer voice-cloning tts models that are better
+		- If push REALLY comes to shove I could just use a basic tts model
+	- SKULL + RUNLINC
+		- Skull's jaw will be actuated by a string (or two) being pulled by a servo attached to a runlinc board
+		- User will speak to skull by pressing down a button, speaking, and releasing the button when done speaking
+		- Once response is generated, skull's mouth will move based on the audio level of the response, oh and the response will be spoken
+SETUP:
+	- Server Side ("Galactus")
+		- Has one main server I'll call Galactus (see Microservices by KRAZAM). Galactus will orchestrate communication between the different services from speech to response.
+		- Three (four?) other services, STT (whisper.cpp), LLM (llama.cpp, multiple for vision?), TTS (XTTS, maybe my own lil' server)
+	- Runlinc + Skull Side ("Mr. Bones"):
+		- Has a websocket connection in which it communicates with the "Galactus" server
+		- Servo and button connected to runlinc board
+LIFECYCLE:
+	1. User begins holding down button
+		- This sends a "begin recording" request through websockets to Galactus server
+		- Galactus sends an "acknowledgement" signal, causing either the site to give a go-ahead or enabling some LED in the button
+		- Once "acknowledgement" is properly sent, microphone audio will begin being recorded
+	2. User finishes holding down button
+		- This sends a "stop recording" request through websockets to Galactus server
+		- Galactus sends an "acknowledgement" signal, disabling the LED/site signal runlinc-side
+		- Once Galactus finishes properly sending the "acknowledgement" signal, audio will stop being recorded and will then be sent off to the STT server for transcription
+	3. Runlinc takes a snapshot of the webcam
+		- This snapshot is then sent through websockets to the server
+		- Once the server recieves the snapshot, it is sent to the vision LLM for description/captioning
+	4. Wait for STT transcription and image captioning
+		- Once both are done, Galactus will then send the prompt and caption over to the LLM for generation
+	5. Wait for LLM generation
+		- Once the llm finishes generating, the resulting text is sent over to the TTS server
+	6. Wait for TTS generation
+		- Once TTS is finished generating, the volume levels of the speech every N seconds (maybe 0.25 or 0.5) is recorded into an array
+		- Then both the speech audio data and speech level array is sent to the runlinc side
+	7. Skull begins speaking!
+		- Recieve the speech data and audio levels from Galactus
+		- Prepare to play the audio and make sure the speech levels are in sync properly
+		- Begin playing the audio and send the audio levels to the server to rotate it in sync with the speaking
+ISSUES:
+	1. My laptop most likely will not be able to run all of this stuff at once
+		- I have 16gb of RAM, the LLM + STT will likely use a good chunk of it
+		- My browser overhead may also be too much
+		- This culminates in everything either running very slow, or not at all
+		- A potential solution is to host it all on my PC and use ngrok or port forwarding to expose access to at least the Galactus server
+		- If I use ngrok, I cannot guarentee stability, I could run out of bandwidth or something could just sorta break and crash it
+		- Port forwarding is busted at the moment, I need to figure out how to fix that
+		- I may also still not have the VRAM to run all of this at the same time, if I use Q4_* quants and potentially figure out a way to run XTTS in half precision I might have a shot
+		- If push REALLY comes to shove I could rent a google cloud server or runpod server or something
+	2. Actuating the jaw in sync with the audio
+		- There are two approaches I could use here, neither of which I have tried yet:
+			1) On the server transcribe the audio levels at an interval to an array, send that off, use setTimeout to continuously play the next one and actuate the jaw each time
+			2) On runlinc, use some browser API to get hold of the audio source, read the levels live and actuate the jaw live
+	3. Latency
+		- There is gonna be MANY server hops during all of this, not to mention generation times, I wouldn't be surprised if the total time to response is like 10 seconds
+		- Gotta definetly save VRAM where possible, use lower context on llms, lower bit quants on everything, this can also boost speed too hopefully
+	4. Environmental noise
+		- The Show is a LOUD environment, idk if my puny laptop mic will like that
+		- I have faith however that whisper is good enough to ignore such noise, but tests will have to be done
+	5. Getting the skull
+		- Idk where I'm gonna get one from since the comp ends at the beginning of September and thats a month from halloween
+		- Maybe ebay? Some random site? Idk yet...
+	6. How do I wanna actuate the jaw?
+		- I forsee two ways:
+			1) Use string to pull the jaw up, problem is though that idk where to put the servo if we do that
+			2) Use rubber bands to keep the jaw shut and pull the jaw down, dunno if the servo would have the force to do that though

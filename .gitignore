@@ -1,0 +1,26 @@
+# Ignore llm and stt stuff
+Galactus/models/llm
+Galactus/models/stt
+
+# Annoyingly I cant seem to ignore everything in the img folder except florence-server.py, so I have to manually ignore everything else :(
+Galactus/models/img/Florence-2-base
+Galactus/models/img/__pycache__
+
+# Ignore model files just in case :P
+*.bin
+*.gguf
+
+# Globally ignoring pycache folders (please work)
+*__pycache__
+*/__pycache__
+*/*/__pycache__
+
+# Ignore temporary files
+Galactus/userImg.png
+Galactus/userSpeech.wav
+MrBones/screenie.png
+MrBones/transcription.wav
+
+# Other ignores
+Stuff
+Galactus/hf-galactus.py
