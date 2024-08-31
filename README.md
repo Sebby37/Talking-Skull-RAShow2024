@@ -42,6 +42,7 @@ I will note that my button I used was not one built for runlinc, so I had to wir
 ## Inspiration
 This project comes from a lot of places converging into one. I'll list as many of them as I can remember:
 
+- All of the LLM knowledge I've gathered over the last year and a half is solely from the amazing [r/localllama](https://new.reddit.com/r/LocalLLaMA/) subreddit
 - The name MrBones comes from the famous [Mr. Bones' Wild Ride meme](https://knowyourmeme.com/memes/mr-bones-wild-ride) which I learned about from Vargskelethor Joel's old (but so great) Rollercoaster Tycoon videos I watched as a kid, found [here](https://www.youtube.com/watch?v=O32D2ool2nY) and [here](https://www.youtube.com/watch?v=AylSEBh8dj4)
 - The name Galactus for the AI orchestrator comes from KRAZAM's wonderful video [Microservices](https://www.youtube.com/watch?v=y8OnoxKotPQ)
 - The general vibe of a goofy skull comes from the [Green Skull](https://www.youtube.com/watch?v=K2ZhbUpFG_w) bit in CallMeCarson's [Weird People in Discord 2](https://www.youtube.com/watch?v=au0mRNOS3pE) video
