@@ -1,5 +1,12 @@
+import openai
 import requests
 from fastapi import FastAPI, UploadFile
+
+# OpenAI client
+client = openai.OpenAI(
+    base_url="http://localhost:8080/v1",
+    api_key="No-bone-y knows!"
+)
 
 # Audio transcription
 def transcribe_audio(audio: bytes) -> str:
@@ -12,7 +19,7 @@ def transcribe_audio(audio: bytes) -> str:
     }, files={"file": open("userSpeech.wav", "rb")})
     
     transcription = r.json()["text"].strip()
-    print("Got speech transcription:", transcription)
+    print("Got audio transcription:", transcription)
     return transcription
 
 # Image captioning
@@ -31,51 +38,32 @@ def caption_img(img: str) -> str:
 def generate_response(speech: str, img_caption: str) -> str:
     # Setup prompts
     system_prompt = open("system_prompt.txt").read()
-    user_message = f'''<VISION>{img_caption}</VISION>\n{speech}'''
-    
-    print(system_prompt, "\n")
-    print(user_message, "\n")
-    
-    import json
-    print(json.dumps({
-        "model": "T-9000", # Get it????
-        "messages": [
-            {
-                "role": "system",
-                "content": system_prompt
-            },
+    user_message = f'''{system_prompt}\n<VISION>{img_caption}</VISION>\n{speech}'''
+    messages = [ # Google, why in hell did you not include a system prompt with your Gemma models?
             {
                 "role": "user",
                 "content": user_message
             }
         ]
-    }))
     
-    # TODO: Somethings muffing up here, the JSON isn't properly being decoded server-side or smth idk
-    # EDIT: I tried it with openai, I think the generation speed is like WAYYYYY too slow or smth
-    r = requests.post("http://localhost:8080/v1/chat/completions", data={
-        "model": "T-9000", # Get it????
-        "messages": [
-            {
-                "role": "system",
-                "content": system_prompt
-            },
-            {
-                "role": "user",
-                "content": user_message
-            }
-        ]
-    })
+    print("System Prompt:", system_prompt, "\n")
+    print("User Message: ", user_message, "\n")
     
-    if r.status_code != 200:
-        print("Failed to generate response:", r.text, r.status_code)
+    try:
+        completion = client.chat.completions.create(
+            model="T-9000", # Get it????
+            messages=messages
+        )
+    except Exception as e:
         return {
             "content": "Something went wrong, I can feel it in my bones!",
-            "error": str(r)
+            "error": e
         }
     
+    print(completion.dict())
+    
     return {
-        "content": r.json()["choices"][0]["message"]["content"].strip(),
+        "content": completion.choices[0].message.content.strip(),
         "error": None
     }
 

@@ -1,0 +1,8 @@
+numpy==1.22.1
+numpy==1.21.5
+pyaudio==0.2.14
+pyttsx3==2.91
+Requests==2.32.3
+scipy==1.8.0
+websockets==13.0
+websockets==9.1

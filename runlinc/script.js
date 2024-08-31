@@ -1,76 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-
-  <meta Access-Control-Allow-Origin="*">
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <style>body {
-    background-color: #323433;
-    color: white;
-    font-family: chilanka;
-}
-table, tr, th, td {
-    border: 1px solid white;
-}
-td {
-    width: 350px;
-    height: 350px;
-    text-align: center; 
-    vertical-align: middle;
-}
-
-.skullInfo {
-    background-color: red;
-    border: 1px solid white;
-    border-radius: 45px;
-    width: 100px;
-    padding: 10px;
-    padding-top: 15px;
-    font-weight: bold;
-    font-size: 25px;
-}</style>
-</head>
-<body>
-  <table>
-    <tr>
-        <td>
-            <h1>Live SKULL reaction</h1>
-            <video id="webcam">Video stream not available.</video>
-            <canvas id="screenie" style="display:none"></canvas>
-        </td>
-        <td>
-            <div class="skullInfo">
-                Listening
-            </div>
-        </td>
-    </tr>
-</table>
-  <script>
-    window.mSec = function( delay ){
-        return (
-            new Promise(
-                (resolve) => setTimeout(
-                    () => resolve( true ), 
-                delay)
-            )
-        );
-    };
-    window.digitalIn = function ( pin ) {
-      return 0;
-    }
-    window.setServo = function ( pin, duty ) {
-      return 0;
-    }
-    window.listenButton = null;
-    window.mouthServo = null;
-  
-    // Skull Stuff
+// Skull Stuff
 let canListen = true;
 let listening = false;
 let speaking = false;
 let jawClosed = false;
+
+class SkullStates {
+    static WAITING = "Sleeping";
+    static LISTENING = "Listening";
+    static THINKING = "Thinking";
+    static SPEAKING = "Speaking";
+}
 
 // Webcam stuff
 const WIDTH = 320;
@@ -178,6 +117,7 @@ function startRecording() {
     
     prevCommand = BoneCodes.START_RECORDING;
     socket.send(BoneCodes.START_RECORDING);
+    setSkullState(SkullStates.LISTENING);
 }
 
 function stopRecording() {
@@ -202,10 +142,13 @@ function generationBegun() {
     // To be implemented moreso in runlinc
     // But mainly frontend stuff I'd say
     canListen = false;
+    setSkullState(SkullStates.THINKING);
 }
 
 function generationComplete(message) {
     speaking = true;
+    setSkullState(SkullStates.SPEAKING);
+    document.getElementById("response").innerText = JSON.parse(message).content;
 }
 
 function speakEnd() {
@@ -213,12 +156,21 @@ function speakEnd() {
     // NOTE: servo value must be between 0 and 60, otherwise it flips itself off the skull lmao
     speaking = false;
     canListen = true;
+    setSkullState(SkullStates.WAITING);
 }
-
 
 function moveJaw() {
     jawClosed = !jawClosed;
     setServo(mouthServo, jawClosed ? 60 : 0);
+}
+
+function setSkullState(newState) {
+    // Set image
+    let skullImg = document.getElementById("skullImg");
+    skullImg.src = `https://raw.githubusercontent.com/Sebby37/Talking-Skull-RAShow2024/main/Media/skull-${newState.toLowerCase()}.jpeg`
+    
+    // Set text
+    document.getElementById("skullState").innerText = newState;
 }
 
 function doTestThingie(duration=3) {
@@ -233,30 +185,4 @@ function doTestThingie(duration=3) {
 
 setupVideo();
 setupWebsocket();
-    ( async function(){
-      while( true ){
-        if (canListen) {
-    let buttonDown = (digitalIn(listenButton) == 1);
-    if (buttonDown && !listening) {
-        listening = true;
-        startRecording();
-    }
-    if (!buttonDown && listening) {
-        listening = false;
-        stopRecording();
-        sendScreenie();
-    }
-}
-
-if (speaking) {
-    moveJaw();
-    await mSec(1000);
-}
-
-await mSec(10);
-        await mSec(0);
-      }
-    })();
-  </script>
-</body>
-</html>
+setSkullState(SkullStates.WAITING);

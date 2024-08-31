@@ -1,4 +1,5 @@
 import asyncio
+import json
 import threading
 from typing import Union
 import numpy as np
@@ -82,6 +83,10 @@ def do_generation():
     return r.json()
 
 def speak_generation(text: str):
+    # Remove funny characters
+    text = text.replace("*", "")
+    
+    # Speak!
     engine.say(text)
     engine.runAndWait()
 
@@ -98,7 +103,7 @@ async def server(websocket):
             # Perform and send generation
             await websocket.send(BoneCodes.GENERATION_BEGIN)
             generation = do_generation()
-            await websocket.send(BoneCodes.GENERATION_COMPLETE + " " + str(generation))
+            await websocket.send(BoneCodes.GENERATION_COMPLETE + " " + json.dumps(generation))
             speak_generation(generation["content"])
             await websocket.send(BoneCodes.SPEAKING_END)
             
@@ -111,8 +116,14 @@ async def server(websocket):
             await websocket.send(res)
 
 async def main():
+    # Start the recording thread
     record = threading.Thread(target=record_thread, daemon=True)
     record.start()
+    
+    # Set some tts properties
+    engine.setProperty("rate", 150)
+    
+    # Serve the server
     async with serve(server, "0.0.0.0", 8765):
         await asyncio.get_running_loop().create_future() # Run forever!!!
 

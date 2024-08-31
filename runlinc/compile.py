@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 
+'''What is this script?
+- Basically just a way for me to test my runlinc code without having to paste it in every time
+'''
+
 TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
