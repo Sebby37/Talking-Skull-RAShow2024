@@ -3,9 +3,11 @@ body {
     color: white;
     font-family: chilanka;
 }
+
 table, tr, th, td {
     border: 1px solid white;
 }
+
 td {
     width: 350px;
     height: 350px;
@@ -31,4 +33,14 @@ td {
     
     font-weight: bold;
     font-size: 25px;
+}
+
+.skullColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+#bigCols {
+    display: flex;
+    flex-direction: row;
 }

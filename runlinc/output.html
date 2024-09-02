@@ -11,9 +11,11 @@
     color: white;
     font-family: chilanka;
 }
+
 table, tr, th, td {
     border: 1px solid white;
 }
+
 td {
     width: 350px;
     height: 350px;
@@ -39,48 +41,87 @@ td {
     
     font-weight: bold;
     font-size: 25px;
+}
+
+.skullColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+#bigCols {
+    display: flex;
+    flex-direction: row;
 }</style>
 </head>
 <body>
-  <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img src="../Media/logo.gif" width="300" height="75">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<table>
-    <tr>
-        <td>
-            <h1>Live SKULL vision</h1>
-            <video id="webcam">Video stream not available.</video>
-            <canvas id="screenie" style="display:none"></canvas>
-        </td>
-        <td>
-            <div id="skullState" class="skullInfo">
-                Loading
-            </div>
-            <img src="" id="skullImg" width="200" height="200">
-            <p id="response">...</p>
-        </td>
-    </tr>
-</table>
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
-<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+  <div id="content">
+    <div class="skullRow">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img src="../Media/logo.gif" width="275" height="69">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+    </div>
+    <div id="bigCols">
+        <div class="skullColumn">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        </div>
+        <table>
+            <tr>
+                <td>
+                    <h1>Live SKULL vision</h1>
+                    <video id="webcam">Video stream not available.</video>
+                    <canvas id="screenie" style="display:none"></canvas>
+                </td>
+                <td>
+                    <div id="skullState" class="skullInfo">
+                        Loading
+                    </div>
+                    <img src="" id="skullImg" width="200" height="200">
+                    <p id="response">...</p>
+                </td>
+            </tr>
+        </table>
+        <div class="skullColumn">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+            <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        </div>
+    </div>
+    <div class="skullRow">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+        <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+    </div>
+</div>
   <script>
     window.mSec = function( delay ){
         return (
@@ -276,19 +317,32 @@ function setSkullState(newState) {
     document.getElementById("skullState").innerText = newState;
 }
 
-function doTestThingie(duration=3) {
-    startRecording();
-    setTimeout(() => {
-        stopRecording();
-        setTimeout(() => {
-            sendScreenie();
-        }, 0.5 * 1000);
-    }, duration * 1000);
+function loadSkullDecos() {
+    const skulls = ["aniskull_Flee.gif",
+        //"arroba.gif",
+        "nurp-skullw.gif",
+        "skullcol.gif",
+        "skull_enter.gif",
+        "skull_flag.gif",
+        "skullflame.gif",
+        "skull.gif",
+        "skullspin.gif", // I like this image, I want it to be more common :)
+        "skullspin.gif",
+        "spinningskull.gif"
+    ];
+    
+    let skullDecos = document.getElementsByClassName("skullDeco");
+    for (const img of skullDecos) {
+        let chosenSkull = skulls[Math.floor(Math.random() * skulls.length)];
+        img.src = `https://raw.githubusercontent.com/Sebby37/Talking-Skull-RAShow2024/main/Media/skull-gifs/${chosenSkull}`;
+    }
 }
 
+// Run setups and such
 setupVideo();
 setupWebsocket();
 setSkullState(SkullStates.WAITING);
+loadSkullDecos();
     ( async function(){
       while( true ){
         if (canListen) {

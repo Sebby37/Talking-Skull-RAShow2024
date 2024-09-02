@@ -176,13 +176,14 @@ function setSkullState(newState) {
 
 function loadSkullDecos() {
     const skulls = ["aniskull_Flee.gif",
-        "arroba.gif",
+        //"arroba.gif",
         "nurp-skullw.gif",
         "skullcol.gif",
         "skull_enter.gif",
         "skull_flag.gif",
         "skullflame.gif",
         "skull.gif",
+        "skullspin.gif", // I like this image, I want it to be more common :)
         "skullspin.gif",
         "spinningskull.gif"
     ];
@@ -190,10 +191,12 @@ function loadSkullDecos() {
     let skullDecos = document.getElementsByClassName("skullDeco");
     for (const img of skullDecos) {
         let chosenSkull = skulls[Math.floor(Math.random() * skulls.length)];
-        img.src = null; // Do this once I've pushed
+        img.src = `https://raw.githubusercontent.com/Sebby37/Talking-Skull-RAShow2024/main/Media/skull-gifs/${chosenSkull}`;
     }
 }
 
+// Run setups and such
 setupVideo();
 setupWebsocket();
 setSkullState(SkullStates.WAITING);
+loadSkullDecos();
