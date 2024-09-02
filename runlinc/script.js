@@ -196,7 +196,7 @@ function loadSkullDecos() {
 }
 
 // Run setups and such
-setupVideo();
-setupWebsocket();
 setSkullState(SkullStates.WAITING);
 loadSkullDecos();
+setupVideo();
+setupWebsocket();

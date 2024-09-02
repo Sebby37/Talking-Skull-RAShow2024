@@ -339,10 +339,10 @@ function loadSkullDecos() {
 }
 
 // Run setups and such
-setupVideo();
-setupWebsocket();
 setSkullState(SkullStates.WAITING);
 loadSkullDecos();
+setupVideo();
+setupWebsocket();
     ( async function(){
       while( true ){
         if (canListen) {
