@@ -42,7 +42,16 @@ td {
 }</style>
 </head>
 <body>
-  <table>
+  <img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img src="../Media/logo.gif" width="300" height="75">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<table>
     <tr>
         <td>
             <h1>Live SKULL vision</h1>
@@ -50,14 +59,28 @@ td {
             <canvas id="screenie" style="display:none"></canvas>
         </td>
         <td>
-            <div class="skullInfo">
-                Listening
+            <div id="skullState" class="skullInfo">
+                Loading
             </div>
             <img src="" id="skullImg" width="200" height="200">
-            <p>Spoken</p>
+            <p id="response">...</p>
         </td>
     </tr>
 </table>
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
+<img class="skullDeco" src="../Media/skull-gifs/skull.gif" width="50" height="50">
   <script>
     window.mSec = function( delay ){
         return (
@@ -84,10 +107,10 @@ let speaking = false;
 let jawClosed = false;
 
 class SkullStates {
-    static WAITING = "sleeping";
-    static LISTENING = "listening";
-    static THINKING = "thinking";
-    static SPEAKING = "speaking;"
+    static WAITING = "Sleeping";
+    static LISTENING = "Listening";
+    static THINKING = "Thinking";
+    static SPEAKING = "Speaking";
 }
 
 // Webcam stuff
@@ -197,6 +220,7 @@ function startRecording() {
     prevCommand = BoneCodes.START_RECORDING;
     socket.send(BoneCodes.START_RECORDING);
     setSkullState(SkullStates.LISTENING);
+    document.getElementById("response").innerText = "...";
 }
 
 function stopRecording() {
@@ -227,6 +251,7 @@ function generationBegun() {
 function generationComplete(message) {
     speaking = true;
     setSkullState(SkullStates.SPEAKING);
+    document.getElementById("response").innerText = JSON.parse(message).content;
 }
 
 function speakEnd() {
@@ -243,8 +268,12 @@ function moveJaw() {
 }
 
 function setSkullState(newState) {
+    // Set image
     let skullImg = document.getElementById("skullImg");
-    skullImg.src = `https://raw.githubusercontent.com/Sebby37/Talking-Skull-RAShow2024/main/Media/skull-${newState}.jpeg`
+    skullImg.src = `https://raw.githubusercontent.com/Sebby37/Talking-Skull-RAShow2024/main/Media/skull-${newState.toLowerCase()}.jpeg`
+    
+    // Set text
+    document.getElementById("skullState").innerText = newState;
 }
 
 function doTestThingie(duration=3) {

@@ -118,6 +118,7 @@ function startRecording() {
     prevCommand = BoneCodes.START_RECORDING;
     socket.send(BoneCodes.START_RECORDING);
     setSkullState(SkullStates.LISTENING);
+    document.getElementById("response").innerText = "...";
 }
 
 function stopRecording() {
@@ -173,14 +174,24 @@ function setSkullState(newState) {
     document.getElementById("skullState").innerText = newState;
 }
 
-function doTestThingie(duration=3) {
-    startRecording();
-    setTimeout(() => {
-        stopRecording();
-        setTimeout(() => {
-            sendScreenie();
-        }, 0.5 * 1000);
-    }, duration * 1000);
+function loadSkullDecos() {
+    const skulls = ["aniskull_Flee.gif",
+        "arroba.gif",
+        "nurp-skullw.gif",
+        "skullcol.gif",
+        "skull_enter.gif",
+        "skull_flag.gif",
+        "skullflame.gif",
+        "skull.gif",
+        "skullspin.gif",
+        "spinningskull.gif"
+    ];
+    
+    let skullDecos = document.getElementsByClassName("skullDeco");
+    for (const img of skullDecos) {
+        let chosenSkull = skulls[Math.floor(Math.random() * skulls.length)];
+        img.src = null; // Do this once I've pushed
+    }
 }
 
 setupVideo();
