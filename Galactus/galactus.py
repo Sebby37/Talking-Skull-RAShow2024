@@ -46,9 +46,10 @@ def generate_response(speech: str, img_caption: str) -> str:
             }
         ]
     
-    print("System Prompt:", system_prompt, "\n")
-    print("User Message: ", user_message, "\n")
+    print("System Prompt:", system_prompt, "\n====")
+    print("User Message: ", user_message, "\n====")
     
+    # Attempt chat completion
     try:
         completion = client.chat.completions.create(
             model="T-9000", # Get it????
@@ -60,10 +61,13 @@ def generate_response(speech: str, img_caption: str) -> str:
             "error": e
         }
     
+    # Parse out stuff we don't want
     print(completion.dict())
+    result = completion.choices[0].message.content
+    result = result.replace("<VISION>", "").replace("</VISION>", "").strip()
     
     return {
-        "content": completion.choices[0].message.content.strip(),
+        "content": result,
         "error": None
     }
 

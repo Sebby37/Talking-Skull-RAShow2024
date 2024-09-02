@@ -84,7 +84,7 @@ def do_generation():
 
 def speak_generation(text: str):
     # Remove funny characters
-    text = text.replace("*", "")
+    text = text.replace("*", "").replace("<VISION>", "").replace("</VISION>", "")
     
     # Speak!
     engine.say(text)
