@@ -218,7 +218,7 @@ function takePicture() {
 }
 
 function setupWebsocket() {
-    socket = new WebSocket("ws://192.168.20.1:8765");
+    socket = new WebSocket("ws://192.168.20.3:8765");
     
     socket.addEventListener("open", (event) => {
         console.log("Websocket opened!", event);
