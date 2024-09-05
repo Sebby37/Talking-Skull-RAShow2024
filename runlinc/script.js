@@ -163,6 +163,7 @@ function speakEnd() {
 function moveJaw() {
     jawClosed = !jawClosed;
     setServo(mouthServo, jawClosed ? 60 : 0);
+    console.log("Moving jaw, jaw closed is:", jawClosed);
 }
 
 function setSkullState(newState) {

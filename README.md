@@ -1,5 +1,7 @@
 # Talking Skull!
-This is my entry into the 2024 Royal Adelaide Show STEM competition. It is a skull with an actuatable jaw that uses OpenAI's Whisper to transcribe speech, Microsoft's Florence 2 to caption my webcam, Google's Gemma-2 2B to generate text, and runlinc to control the speech button and actuate the jaw of the skull!
+Meet Mr. Bones, a talking skull with a terrible sense of humor who never seems to stop making terrible bone puns! This is my entry into the 2024 Royal Adelaide Show STEM competition. It is a skull with an actuatable jaw that uses OpenAI's Whisper to transcribe speech, Microsoft's Florence 2 to caption my webcam, Google's Gemma-2 2B to generate text, and runlinc to control the speech button and actuate the jaw of the skull!
+
+![The full setup of him at the show!](Media/Full-Setup.jpg)
 
 ## Structure
 This project is separated into 3 different parts that all communicate through one-another:
